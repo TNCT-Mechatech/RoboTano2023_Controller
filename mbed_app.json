@@ -1,0 +1,14 @@
+{
+  "target_overrides": {
+        "*": {
+            "target.printf_lib": "std"
+        }
+    },
+  "config": {
+    "serialbridge_for_mbed": {
+      "help": "Macro",
+      "macro_name": "MBED",
+      "value": 0
+    }
+  }
+}

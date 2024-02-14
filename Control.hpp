@@ -2,6 +2,7 @@
 #define CONTROL_HPP_
 
 #include "Message.hpp"
+#include <cstdint>
 
 typedef struct ControlType {
   int8_t joystick_x;

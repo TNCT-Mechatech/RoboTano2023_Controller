@@ -23,6 +23,11 @@ DigitalIn Arm_up(D10);  //双方向スイッチの上方向
 DigitalIn Arm_down(D9); //双方向スイッチの下方向
 DigitalIn Hand(D6);     //エアシリンダー
 
+DigitalOut Led1(A0);
+DigitalOut Led2(A1);
+DigitalOut Led3(A2);
+
+
 // Message
 Control msg;
 
@@ -30,15 +35,21 @@ int main() {
   serial.add_frame(0, &msg);
 
   while (true) {
+
+    
+    
     msg.data.joystick_x = static_cast<int8_t>((X.read() - 0.5) * 200); //x方向のジョイスティックの値を1byteで送信できるように変換かつ値の範囲を-100~100までにする
     msg.data.joystick_y = static_cast<int8_t>((Y.read() - 0.5) * 200);//Y方向のジョイスティックの値を1byteで送信できるように変換かつ値の範囲をを-100~100までにする
+    Led1 = !Led1;
     msg.data.joystick_turn = static_cast<int8_t>((Turn.read() - 0.5) * 200);//旋回用のジョイスティックの値を1byteで送信できるように変換かつ値の範囲を-100~100までにする
     msg.data.moter_speed = static_cast<int8_t>((Speed.read() - 0.5) * 200);//ローラーの回転速度の値を1byteで送信できるように変換かつ値の範囲を-100~100までにする
+    Led2 = !Led2;
     msg.data.roller_status = (Roller == 1) ? true : false;
     msg.data.shoot_bottom = (Shoot == 1) ? true : false;
     msg.data.arm_up = (Arm_up == 1) ? true : false;
     msg.data.arm_down = (Arm_down == 1) ? true : false;
     msg.data.hand_status = (Hand == 1) ? true : false;
+    Led3 = !Led3;
     serial.write(0);
     printf("抵抗値:%d  " ,msg.data.moter_speed);
     printf("スイッチ:%s\n",msg.data.roller_status ? "true" : "false");
